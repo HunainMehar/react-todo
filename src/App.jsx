@@ -36,8 +36,9 @@ const App = () => {
 
   const addTodo = (title) => {
     setTodos(currentTodos => {
-      return [...currentTodos,
-      { id: crypto.randomUUID(), title, completed: false }
+      return [
+        { id: crypto.randomUUID(), title, completed: false },
+        ...currentTodos,
       ]
     })
     addNotify();
@@ -45,13 +46,14 @@ const App = () => {
 
   const toggleTodo = (id, checked) => {
     setTodos(currentTodos => {
-      return currentTodos.map(todo => {
+      const updatedTodos= currentTodos.map(todo => {
         if (todo.id === id) {
-          return { ...todo, completed: checked }
+          return { ...todo, completed: checked };
         }
-        return todo
-      })
-    })
+        return todo;
+      });
+      return updatedTodos.sort((a, b) => a.completed - b.completed);
+    });
     if (checked) {
       completeNotify();
     }
